@@ -138,7 +138,8 @@
 })
 
 // --- Page ---------------------------------------------------------------------
-#headline("Same brief, four tools: the run, drawn.", note: "8.6× apart on cost · 11.8× on time · 4 of 4 kept the gate in the prompt")
+// Approved with the note at the title's line height (a 4 px taller row).
+#headline("Same brief, four tools: the run, drawn.", note: "8.6× apart on cost · 11.8× on time · 4 of 4 kept the gate in the prompt", note-lh: 36)
 #v(16 * px)
 
 #grid(

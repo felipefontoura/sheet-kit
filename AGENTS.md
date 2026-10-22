@@ -179,3 +179,7 @@ Infographic quality (what passed review, after two that did not)
 - No native baseline grid or column balancing: example page 09 builds both.
 - `set page` works inside an `#include`d page (each include starts a page),
   not inside a box or block.
+- Two fonts on one line at the same line height make the line taller than
+  that height (their ascent/descent differ). A secondary run on a line
+  (a note, inline code) takes a smaller `lh` so it fits inside the main one;
+  `headline` and `panel-head` notes already do.

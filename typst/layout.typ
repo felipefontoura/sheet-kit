@@ -58,10 +58,13 @@
 }
 
 // The headline row: a serif headline and a mono note on one shared baseline
-// (one line of text, so the baselines can't drift apart).
-#let headline(title, note: none, size: 32, lh: 36, note-size: 10.5, note-fill: ink.secondary) = para(
+// (one line of text, so the baselines can't drift apart). The note's line box
+// (`note-lh`) stays inside the title's: two fonts with different metrics on
+// one line at the same line height make the line taller than `lh` (by ~4 px
+// here), and then the page's arithmetic is off.
+#let headline(title, note: none, size: 32, lh: 36, note-size: 10.5, note-fill: ink.secondary, note-lh: 12) = para(
   tx(title, font: serif, size: size, lh: lh, tracking: -0.02em)
-    + if note != none { h(1fr) + m(note, size: note-size, fill: note-fill, lh: lh) },
+    + if note != none { h(1fr) + m(note, size: note-size, fill: note-fill, lh: note-lh) },
 )
 
 // A surface card. No shadows: a blurred shadow prints as a transparency
