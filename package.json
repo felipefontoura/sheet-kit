@@ -1,0 +1,22 @@
+{
+  "name": "sheet-kit",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Fixed-layout infographic pages in Typst: Base25 theme, chart marks, and checks that catch what an eye misses (missing glyphs, margins, Preview seams, regressions).",
+  "license": "MIT",
+  "author": "Felipe Fontoura (https://felipefontoura.com)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipefontoura/sheet-kit.git"
+  },
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "check": "node scripts/check.mjs",
+    "example": "bash example/run.sh"
+  },
+  "devDependencies": {
+    "mupdf": "^1.28.1",
+    "pngjs": "^7.0.0"
+  }
+}

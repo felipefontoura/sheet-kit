@@ -1,0 +1,5 @@
+[tools]
+node = "25"
+# Pinned on purpose: a Typst upgrade can move line breaks. Bump it, then
+# refresh the reference with `bash example/run.sh --update-ref`.
+"github:typst/typst" = "0.15.1"

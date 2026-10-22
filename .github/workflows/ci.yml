@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  example-build:
+    name: Build and check the concept book
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Installs Node + Typst pinned by mise.toml
+      - uses: jdx/mise-action@v4
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      # PDF + page PNGs + checks (fonts, glyphs, safe area, regression vs
+      # example/output/png). Preview renders need macOS and are skipped here.
+      - name: Build the concept book
+        run: bash example/run.sh --all
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: concept-book
+          path: example/.build/dist/
+          retention-days: 14

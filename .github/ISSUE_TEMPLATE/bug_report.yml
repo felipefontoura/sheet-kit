@@ -1,0 +1,46 @@
+name: Bug report
+description: Something builds wrong, renders wrong, or a check misfires
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead? A screenshot of the render helps.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal page to reproduce
+      description: >
+        The smallest page (and sheet.config.json / data.typ fields, if
+        relevant) that shows the problem. If `bash example/run.sh` already
+        shows it, say which page.
+      render: typst
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where it shows
+      placeholder: Typst PNG / Preview at 1x / Preview at 4x / a check
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Node version, Typst version (`typst --version`).
+      placeholder: |
+        macOS 26 · Node 25.x · typst 0.15.1
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Build output
+      description: The relevant part of the `build.sh` output or Typst error.
+      render: text
+    validations:
+      required: false

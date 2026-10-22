@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Base25 dark for sheet-kit code blocks: paper text, muted comments,
+     amber for the parts a reader acts on (strings, tokens, keywords). -->
+<plist version="1.0">
+<dict>
+  <key>name</key><string>Base25 Dark</string>
+  <key>settings</key>
+  <array>
+    <dict><key>settings</key><dict>
+      <key>foreground</key><string>#ECE7DF</string>
+      <key>background</key><string>#14120F</string>
+    </dict></dict>
+    <dict><key>name</key><string>Comment</string>
+      <key>scope</key><string>comment, punctuation.definition.comment</string>
+      <key>settings</key><dict><key>foreground</key><string>#6E665C</string></dict></dict>
+    <dict><key>name</key><string>String</string>
+      <key>scope</key><string>string, string.quoted, punctuation.definition.string</string>
+      <key>settings</key><dict><key>foreground</key><string>#F8C662</string></dict></dict>
+    <dict><key>name</key><string>Number</string>
+      <key>scope</key><string>constant.numeric, constant.language</string>
+      <key>settings</key><dict><key>foreground</key><string>#F5B83D</string></dict></dict>
+    <dict><key>name</key><string>Keyword</string>
+      <key>scope</key><string>keyword, keyword.control, keyword.operator, storage</string>
+      <key>settings</key><dict><key>foreground</key><string>#D49311</string></dict></dict>
+    <dict><key>name</key><string>Command</string>
+      <key>scope</key><string>support.function, variable.function, entity.name.function, meta.function-call</string>
+      <key>settings</key><dict><key>foreground</key><string>#EDA921</string></dict></dict>
+    <dict><key>name</key><string>Variable</string>
+      <key>scope</key><string>variable.other, variable.parameter, punctuation.definition.variable</string>
+      <key>settings</key><dict><key>foreground</key><string>#ECE7DF</string></dict></dict>
+    <dict><key>name</key><string>Heading</string>
+      <key>scope</key><string>markup.heading, punctuation.definition.heading, entity.name.section</string>
+      <key>settings</key><dict><key>foreground</key><string>#ECE7DF</string><key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>name</key><string>Inline code</string>
+      <key>scope</key><string>markup.raw, markup.raw.inline, punctuation.definition.raw</string>
+      <key>settings</key><dict><key>foreground</key><string>#F8C662</string></dict></dict>
+    <dict><key>name</key><string>List</string>
+      <key>scope</key><string>markup.list, punctuation.definition.list_item, punctuation.definition.list.begin</string>
+      <key>settings</key><dict><key>foreground</key><string>#A39A8D</string></dict></dict>
+    <dict><key>name</key><string>Emphasis</string>
+      <key>scope</key><string>markup.bold, markup.italic</string>
+      <key>settings</key><dict><key>foreground</key><string>#ECE7DF</string></dict></dict>
+  </array>
+</dict>
+</plist>
