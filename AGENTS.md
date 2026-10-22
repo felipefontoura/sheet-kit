@@ -155,6 +155,29 @@ Infographic quality (what passed review, after two that did not)
 4. Open the PDF in Preview for the human: `open -a Preview dist/<name>.pdf`.
 5. A regression failure you meant: `--update-ref`, and say what changed.
 
+## Porting a page from HTML
+
+A page designed in HTML (or exported from Claude Design) ports 1:1: CSS
+`font-size` / `line-height` become `tx(size:, lh:)`, widths, paddings and gaps
+keep their px. Render the approved page and the port with Preview's engine
+at 2x and overlay them (approved red, port green: aligned ink is yellow);
+the SDD Tools Cheatsheet's seven pages landed at a mean difference of 2.3–3.7
+(0–255), the rest being antialiasing. Three browser habits need help:
+
+- Chrome rounds each font's ascent and descent to whole px. Typst uses the
+  exact metrics, so a line mixing Inter and mono grows 0.2–0.4 px and the
+  error adds up down a list. Set inline mono with the surrounding sans line's
+  edges (or a smaller `lh` in an unbreakable box) so the line keeps its height.
+- Chrome breaks lines greedily: use `set par(linebreaks: "simple")` in ported
+  text, keep straight quotes when the HTML has them, and break inline code
+  only at spaces.
+- `text-wrap: pretty` and `balance` move the last lines of a paragraph; Typst
+  has no equivalent. Put the approved break in by hand, with a comment.
+
+CSS `justify-content: space-between` is `v(1fr)` between the blocks; a row of
+cards that stretch to the tallest is a `grid` row of `auto` with `height:
+100%` cards.
+
 ## Changing the kit
 
 - A helper born in a page moves into `typst/` when a second page needs it.
