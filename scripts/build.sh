@@ -135,7 +135,13 @@ fi
 if [[ "$target" == "png" || "$target" == "all" ]]; then
   echo "▸ Rendering page PNGs (${PPI} ppi)..."
   rm -rf "$DIST/png" && mkdir -p "$DIST/png"
-  typst_c --input total="$TOTAL" --format png --ppi "$PPI" "$ENTRY" "$DIST/png/{0p}.png"
+  typst_c --input total="$TOTAL" --format png --ppi "$PPI" "$ENTRY" "$DIST/png/{p}.png"
+  # Two digits at least (Typst pads only to the page count's width), so
+  # names stay stable as a material grows: 01.png … 10.png.
+  for f in "$DIST"/png/*.png; do
+    b="$(basename "$f" .png)"
+    mv "$f" "$DIST/png/$(printf '%02d' "$((10#$b))").png" 2>/dev/null || true
+  done
   echo "   PNG: $DIST/png/ ($TOTAL pages)"
 fi
 
