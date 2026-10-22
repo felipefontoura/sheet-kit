@@ -49,6 +49,9 @@
   let (w, h) = formats.at(format)
   set page(width: w, height: h, margin: (top: margin.top * px, bottom: margin.bottom * px, x: margin.x * px), fill: ink.bg)
   set text(font: sans, fill: ink.paper, fallback: check-fallback)
+  // Raw blocks in the house mono too (Typst's default is DejaVu Sans Mono),
+  // without code ligatures.
+  show raw: set text(font: mono, features: (calt: 0))
   set block(spacing: 0pt)
   block(width: 100%, height: 100%, spacing: 0pt, {
     header(label: label, section: section, checked: checked, n: n, total: total)

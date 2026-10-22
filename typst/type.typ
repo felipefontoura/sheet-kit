@@ -77,7 +77,12 @@
 #let eyebrow(body, fill: ink.secondary) = tx(body, font: mono, size: 12, lh: 16, tracking: 0.06em, caps: true, fill: fill)
 #let lbl(body, fill: ink.amber-600) = para(body, font: mono, size: 12, lh: 14, tracking: 0.06em, caps: true, fill: fill)
 
-// Inline code inside a sans paragraph of line height `lh`.
-#let code(body, lh: 17, size: 11.5) = tx(raw(body), font: mono, size: size, lh: lh, fill: ink.paper)
+// Inline code inside a sans paragraph of line height `lh`. Set as mono text,
+// not `raw`: Typst's raw element carries its own font (DejaVu Sans Mono),
+// which would win over the house mono. Quotes stay straight, as typed.
+#let code(body, lh: 17, size: 11.5) = {
+  set smartquote(enabled: false)
+  tx(body, font: mono, size: size, lh: lh, fill: ink.paper)
+}
 
 #let pad2(n) = if n < 10 { "0" + str(n) } else { str(n) }
