@@ -10,7 +10,8 @@
 #                  sheet.config.json, else the kit itself (single-repo).
 #
 # Targets: --pdf | --png | --all (default: the PDF, the page PNGs and checks)
-#          --page NN    pages/NN-*.typ alone → dist/pages/NN.{pdf,png} (fast loop)
+#          --page NN    pages/NN-*.typ alone → dist/pages/NN.{pdf,png} + its checks
+#                       (fast loop; page-scoped paths, so pages build in parallel)
 # Options: --preview    macOS: render the PDF with Preview's engine (CoreGraphics)
 #                       at 1x, 1.5x and 4x into .build/preview/, and scan for slabs
 #          --links      request every link in the PDF
@@ -122,6 +123,12 @@ if [[ "$target" == "page" ]]; then
   typst_c --input page="$n" --input total="$TOTAL" --format png --ppi "$PPI" "$PROJECT_ROOT/$file" "$DIST/pages/$page.png"
   echo "   $file → dist/pages/$page.{pdf,png} ($(( $(ms) - t )) ms)"
   PDF="$DIST/pages/$page.pdf"
+  # The page's own checks (no regression: that is the whole material's).
+  # Everything goes to page-scoped paths, so pages can be built in parallel.
+  typst_c --input page="$n" --input total="$TOTAL" --input fallback=true "$PROJECT_ROOT/$file" "$BUILD/fallback-$page.pdf"
+  rm -rf "$BUILD/check-$page" && mkdir -p "$BUILD/check-$page"
+  cp "$DIST/pages/$page.png" "$BUILD/check-$page/01.png"
+  check --pdf "$PDF" --fallback "$BUILD/fallback-$page.pdf" --format "$FORMAT" --png "$BUILD/check-$page" --ppi "$PPI" || status=1
 fi
 
 # ─── The material: one document, fonts embedded once ─────────────────
@@ -170,11 +177,17 @@ if [[ $preview -eq 1 ]]; then
   else
     echo "▸ Rendering with Preview's engine (CoreGraphics)..."
     bin="$BUILD/preview-render"
-    [[ "$bin" -nt "$KIT_ROOT/scripts/preview.swift" ]] || swiftc -O "$KIT_ROOT/scripts/preview.swift" -o "$bin"
-    rm -rf "$BUILD/preview"
-    for s in 1 1.5 4; do mkdir -p "$BUILD/preview/$s"; "$bin" "$PDF" "$BUILD/preview/$s" "$s"; done
-    echo "   $BUILD/preview/{1,1.5,4}/"
-    check --slab "$BUILD/preview/1.5" || status=1
+    # Compiled once per material; to a temp name first, so parallel page
+    # builds never run a half-written binary.
+    if [[ ! "$bin" -nt "$KIT_ROOT/scripts/preview.swift" ]]; then
+      swiftc -O "$KIT_ROOT/scripts/preview.swift" -o "$bin.$$" && mv -f "$bin.$$" "$bin"
+    fi
+    out="$BUILD/preview"
+    [[ "$target" == "page" ]] && out="$BUILD/preview/page-$page"
+    rm -rf "$out"
+    for s in 1 1.5 4; do mkdir -p "$out/$s"; "$bin" "$PDF" "$out/$s" "$s"; done
+    echo "   $out/{1,1.5,4}/"
+    check --slab "$out/1.5" || status=1
   fi
 fi
 
